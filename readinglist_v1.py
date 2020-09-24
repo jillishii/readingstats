@@ -1,4 +1,4 @@
-### Set up Reading List Database
+### Reading List Database Project
 ### Using Goodreads API as library database
 
 import http.client
@@ -40,25 +40,34 @@ authors_fields = [
     'ratings_cnt'
 ]
 
+def savefile( filename, fields, rows ):
+    with open(filename, "w", newline = '') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerow(fields)
+        csvwriter.writerows(rows)
+        
 ### GoodreadsAPI -- Get books by member shelf given a list of shelf names
-##  Use standard shelf names from Goodreads
-
+## can be enhanced later to look up all shelves by member ID
+## these are the standard Goodreads shelves
 shelfNames = ['read','currently-reading','to-read']
+# shelfNames = ['currently-reading']
+
 for shelf in shelfNames:
 
     ## initialize paging and table variables per shelf
     filename = shelf + '.csv'
-    rows = []
+    shelf_rows = []
     list_id = 1
     reviewlist = []
     pageStart = 1
     booksData = 0
     totalBooksOnShelf = 1
+    per_page = 100
+    
     
     while booksData < totalBooksOnShelf:
         print(shelf + ' pageStart: ' + str(pageStart))
         booksData_at_start = booksData
-        per_page = 100
         
         conn = http.client.HTTPSConnection('www.goodreads.com')
         payload = ''
@@ -91,16 +100,13 @@ for shelf in shelfNames:
         book_id = review.get('id')
         isbn = book.get('isbn')
         if isinstance(isbn, dict):
-            isbn = None
+            isbn = ''
         isbn13 = book.get('isbn13')
         if isinstance(isbn13, dict):
-            isbn13 = None
+            isbn13 = ''
         title = book.get('title')
-        num_pages_raw = book.get('num_pages')
-        if num_pages_raw is None:
-            num_pages = None
-        else:
-            num_pages = int(num_pages_raw)
+        num_pages = book.get('num_pages')
+
         publisher = book.get('publisher')
         publication_year = book.get('published')
         book_avg_rating = book.get('average_rating')
@@ -122,54 +128,33 @@ for shelf in shelfNames:
      
         # create a table for each shelf storing shelf specific data
         if shelf == "currently-reading":
-            fields = [ 'id', 'book', 'start_date' ]
-            start_date_str = review.get('started_at')
-            if start_date_str is None:
-                thisRow = [ list_id, book_id, None]
-            else:
-                start_date = datetime.strptime(start_date_str, '%a %b %d %H:%M:%S %z %Y')
-                thisRow = [ list_id, book_id, start_date.date()]
-            rows.append(thisRow)
+            shelf_fields = [ 'id', 'book', 'start_date' ]
+            start_date = review.get('started_at')
+            thisRow = [ list_id, book_id, start_date]
+            shelf_rows.append(thisRow)
         
         elif shelf == "to-read":
-            fields = [ 'id', 'book', 'date_added' ]
-            date_added_str = review.get('date_added')
-            if date_added_str is None:
-                thisRow = [ list_id, book_id, None]
-            else:
-                date_added = datetime.strptime(date_added_str, '%a %b %d %H:%M:%S %z %Y')
-                thisRow = [ list_id, book_id, date_added.date()]
-            rows.append(thisRow)
+            shelf_fields = [ 'id', 'book', 'date_added' ]
+            date_added = review.get('date_added')
+            thisRow = [ list_id, book_id, date_added ]
+            shelf_rows.append(thisRow)
         
         elif shelf == "read":
-            fields = [ 'id', 'book', 'finish_date', 'myRating', 'myReview' ]
+            shelf_fields = [ 'id', 'book', 'finish_date', 'myRating', 'myReview' ]
+            finish_date = review.get('read_at')
             myRating = review.get('rating')
             myReview = review.get('body')
-            finish_date_str = review.get('read_at')
-            if finish_date_str is None:
-                thisRow = [ list_id, book_id, finish_date.date(), myRating, myReview]
-            else:
-                finish_date = datetime.strptime(finish_date_str, '%a %b %d %H:%M:%S %z %Y')
-
-                thisRow = [ list_id, book_id, finish_date.date(), myRating, myReview]
-            rows.append(thisRow)
+            thisRow = [ list_id, book_id, finish_date, myRating, myReview]
+            shelf_rows.append(thisRow)
 
         with open(filename, "w", newline = '') as csvfile:
             csvwriter = csv.writer(csvfile)
-            csvwriter.writerow(fields)
-            csvwriter.writerows(rows)
+            csvwriter.writerow(shelf_fields)
+            csvwriter.writerows(shelf_rows)
         
         list_id += 1
-   
-with open(books_filename, "w", newline = '') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    csvwriter.writerow(books_fields)
-    csvwriter.writerows(books_rows)
-    
-with open(authors_filename, "w", newline = '') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    csvwriter.writerow(authors_fields)
-    csvwriter.writerows(authors_rows)
+savefile(books_filename,books_fields,books_rows)
+savefile(authors_filename,authors_fields,authors_rows)
     
 print('book shelf loading complete')
 
