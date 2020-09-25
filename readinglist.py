@@ -24,7 +24,8 @@ def formatMyRawDate(dateStringToFormat):
         datefieldobject = datetime.strptime(dateStringToFormat, '%a %b %d %H:%M:%S %z %Y')
         myNewDate = datefieldobject.date()
 
-# create new function to get a discrete rating based on the avg rating
+## for later feature: create new function to get a discrete rating based on the avg rating
+
 
 ### Bookshelf Loading: Get current files or create new ones
 
@@ -39,7 +40,7 @@ if path.exists('books.csv'):
     
     print(len(current_books_rows))
 
-## Since no files were found, assume booksData=0 and there is at least 1 book on the shelf to get
+### Since no files were found, build them here based on member ID 
 else:
     ## can be set to run on any Goodreads member ID
     # myMemberID = input(['Enter Goodreads Member ID'])
@@ -79,17 +80,8 @@ else:
         'ratings_cnt'
     ]
  
-    ## can be enhanced later to look up all shelves by member ID
-    ## these are the standard Goodreads shelves
-    # shelfNames = ['read','currently-reading','to-read']
-    # shelfNames = ['currently-reading']
 
-    # for shelf in shelfNames:
-
-    ## initialize paging and table variables per shelf
-    filename = shelf + '.csv'
-    shelf_rows = []
-    list_id = 1
+    ## initialize paging variables (assume there is at least 1 book on the shelf to get)
     reviewlist = []
     pageStart = 1
     booksData = 0
@@ -105,7 +97,7 @@ else:
         headers = {
             'Cookie': 'ccsid=355-8086303-7158046; locale=en'
         }
-        uri = '/review/list?v=2&id=' + str(myMemberID) + '&shelf=' + shelf + '&key=kNP4OTpBRIGzIuvPFFTCQ&page=' + str(pageStart) + '&per_page=' + str(per_page)
+        uri = '/review/list?v=2&id=' + str(myMemberID) + '&key=kNP4OTpBRIGzIuvPFFTCQ&page=' + str(pageStart) + '&per_page=' + str(per_page)
 
         conn.request('GET', uri, payload, headers)
         res = conn.getresponse()
@@ -127,7 +119,7 @@ else:
     
     for review in reviewlist:
         
-        ## parse data for books
+        ## parse book data
         book = review.get('book')
         book_id = review.get('id')
         isbn = book.get('isbn')
@@ -177,7 +169,6 @@ else:
         shelfName = shelf.get('@name')
         
         ## parse author data
-        
         authors = book.get('authors')
         for author in authors:
             singleAuthor = authors.get('author')
@@ -186,59 +177,53 @@ else:
             author_avg_rating = singleAuthor.get('average_rating')
             author_ratings_cnt = singleAuthor.get('ratings_count')
         
-        bookRow = [ book_id, isbn, isbn13, title, num_pages, "", "", publisher, publication_year, book_avg_rating, book_ratings_cnt, author_id, date_added, start_date, finish_date, myRating, myReview, shelfName ]
+        bookRow = [ 
+            book_id, 
+            isbn, 
+            isbn13, 
+            title, 
+            num_pages, 
+            "", 
+            "", 
+            publisher, 
+            publication_year, 
+            book_avg_rating, 
+            book_ratings_cnt, 
+            author_id, 
+            date_added, 
+            start_date, 
+            finish_date, 
+            myRating, 
+            myReview, 
+            shelfName
+            ]
         books_rows.append(bookRow)
+        
         authorRow = [ author_id, author_name, author_avg_rating, author_ratings_cnt ]
         if authorRow not in authors_rows:
             authors_rows.append(authorRow)
-     
-        # create a table for each shelf storing shelf specific data
-        if shelf == "currently-reading":
-            shelf_fields = [ 'id', 'book', 'start_date' ]
-            start_date = review.get('started_at')
-            thisRow = [ list_id, book_id, start_date]
-            shelf_rows.append(thisRow)
-        
-        elif shelf == "to-read":
-            shelf_fields = [ 'id', 'book', 'date_added' ]
-            date_added = review.get('date_added')
-            thisRow = [ list_id, book_id, date_added ]
-            shelf_rows.append(thisRow)
-        
-        elif shelf == "read":
-            shelf_fields = [ 'id', 'book', 'finish_date', 'myRating', 'myReview' ]
-            finish_date = review.get('read_at')
-            myRating = review.get('rating')
-            myReview = review.get('body')
-            thisRow = [ list_id, book_id, finish_date, myRating, myReview]
-            shelf_rows.append(thisRow)
 
-        with open(filename, "w", newline = '') as csvfile:
-            csvwriter = csv.writer(csvfile)
-            csvwriter.writerow(shelf_fields)
-            csvwriter.writerows(shelf_rows)
-        
-        list_id += 1
     saveFile(books_filename, books_fields, books_rows)
     saveFile(authors_filename, authors_fields, authors_rows)
     
 print('book shelf loading complete')
 
+
 ### Goodreads API -- Get genre for each book using ISBN
 
-print('loading genres for '+ str(len(books_rows)) +' books')
-genres_filename = 'genres.csv'
-genres_rows = []
-genres_fields = [
-    'id',
-    'book_id',
-    'isbn',
-    'isFiction',
-    'all_genres',
-    'filtered_genres',
-    'top_genre'
-    ]
-genre_id = 1
+# print('loading genres for '+ str(len(books_rows)) +' books')
+# genres_filename = 'genres.csv'
+# genres_rows = []
+# genres_fields = [
+    # 'id',
+    # 'book_id',
+    # 'isbn',
+    # 'isFiction',
+    # 'all_genres',
+    # 'filtered_genres',
+    # 'top_genre'
+    # ]
+# genre_id = 1
 
 ## Common shelf names on Goodreads that are not valid genres
 # genreExceptions = [

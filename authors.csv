@@ -1,209 +1,192 @@
 id,name,avg_rating,ratings_cnt
-3389,Stephen King,4.04,14399059
-3158574,Simon Sinek,4.09,159708
-16667,Isaac Asimov,4.16,1974447
-1221698,Neil Gaiman,4.13,6026727
-1654,Terry Pratchett,4.15,4230701
-4764,Philip K. Dick,3.92,1068804
-12667,Jess Walter,3.69,188991
-6540057,Andy Weir,4.26,1013504
-16612158,Masaji Ishikawa,4.27,38714
-3089156,Randall Munroe,4.15,155088
-7717,Richard  Adams,4.04,457293
-880695,H.G. Wells,3.83,1039076
-378554,Andrew Mayne,4.10,98944
-4805000,Mishka Shubaly,3.65,7101
-656983,J.R.R. Tolkien,4.33,8418637
-3472,Margaret Atwood,4.03,2718761
-3371,Dave Eggers,3.71,677469
-3087199,A.G. Riddle,3.91,204594
-7956,Mary Roach,3.94,365611
-61788,Marc Levy,3.78,126067
-7456960,Marc Goodman,3.93,3637
-442240,Blake Crouch,4.04,632278
-7779,Arthur C. Clarke,3.97,1082371
-33919,Jeff VanderMeer,3.70,340476
-4,Douglas Adams,4.20,2724541
-3064305,Hugh Howey,4.15,581004
-18237,Peter Lynch,4.16,28682
-8865,Mary Karr,3.93,102037
-1825,Harper Lee,4.23,4684647
-4039811,Veronica Roth,4.06,5421493
-589,Orson Scott Card,4.09,2641266
-23613,Emma Donoghue,3.97,867755
-706255,Stieg Larsson,4.16,4253806
-1439,Malcolm Gladwell,4.01,2082301
-4178,Cormac McCarthy,4.01,1196183
-2546,Chuck Palahniuk,3.83,1498853
-7,Bill Bryson,4.03,1325628
-498072,Audrey Niffenegger,3.93,1671269
-3190,F. Scott Fitzgerald,3.91,4098345
-585,John Steinbeck,3.94,3716679
-1235,Jon Krakauer,4.04,1539247
-1077326,J.K. Rowling,4.46,25342000
-11139,Mary Wollstonecraft Shelley,3.81,1182181
-11072,Daniel Keyes,4.14,499305
-3706,George Orwell,4.08,6199413
-153394,Suzanne Collins,4.26,11668811
-133538,Christopher McDougall,4.27,177492
-1285555,José Saramago,4.03,416020
-2617,Jonathan Safran Foer,3.96,661101
-2849,David Sedaris,4.00,1795529
-3058,Augusten Burroughs,3.81,608611
-3487,Aldous Huxley,3.99,1706952
-1630,Ray Bradbury,4.01,2358364
-13974,Mark Z. Danielewski,4.01,147874
-819789,J.D. Salinger,3.84,3092511
-3167,Joseph Heller,3.97,738963
-45003,Ken Jennings,3.83,14875
-4470653,S.J. Watson,3.85,303440
-401,Robert M. Pirsig,3.77,201760
-630,Dan Brown,3.84,6971734
-4385839,Tina Fey,3.95,838518
-3275,Jeannette Walls,4.22,1089465
-73034,Juan Gabriel Vásquez,3.77,20662
-569,Khaled Hosseini,4.30,3915798
-479779,John Ajvide Lindqvist,3.92,122571
-957894,Albert Camus,4.00,1085089
-2383,Gillian Flynn,4.02,3801122
-1588088,Maria Semple,3.80,542537
-2778055,Kurt Vonnegut Jr.,4.06,2463813
-2749,Scott Turow,3.98,211428
-3222554,Jonas Jonasson,3.79,277860
-12577,Douglas Preston,4.01,838261
-57342,Mark Michalowski,3.74,3293
-5856,Tucker Max,3.57,91490
-941441,Stephenie Meyer,3.65,10713413
-3618,Philip Pullman,4.04,2369619
-104943,David Sheff,4.09,64643
-353227,Nic Sheff,3.90,41328
-7014875,Nick Offerman,3.68,55903
-4864700,Will Cole,3.74,1028
-205,Robert A. Heinlein,3.94,1094840
-261107,Mark W. Tiedemann,3.78,3306
-3032451,Siddhartha Mukherjee,4.30,115356
-6152615,Presh Talwalkar,3.89,785
-9494,H.P. Lovecraft,4.05,546522
-69641,Jen Sincero,3.95,158328
-5791,Max Brooks,3.98,567641
-7025,Gregory Maguire,3.53,884289
-3354,Haruki Murakami,3.96,2344971
-7210762,Scott Carney,4.00,7220
-3961,Alan Moore,4.23,1415320
-735413,Ben H. Winters,3.73,100481
-16247987,Paul  Shore,3.81,401
-3075,John Irving,4.00,941583
-9013543,Ruth Ware,3.72,905914
-6480560,Rory Sutherland,4.29,2051
-6252,Robert Jordan,4.18,2323809
-38550,Brandon Sanderson,4.39,3437447
-16094,Lois McMaster Bujold,4.17,473040
-12479,Timothy Zahn,4.07,373217
-3441,Terry Goodkind,4.00,994389
-1069006,C.S. Lewis,4.15,5810759
-3312074,John N. Gray,3.89,10983
-9629,Terry Brooks,3.96,786700
-815,Carlos Ruiz Zafón,4.14,777363
-55727,Jonathan Haidt,4.19,73099
-8588,Raymond E. Feist,4.14,814463
-19109,Stephen Jay Gould,4.04,68220
-740,James Altucher,3.82,19465
-12521,William Goldman,4.25,807255
-340262,Michael Breus,3.54,2222
-3617,Diana Gabaldon,4.27,2353507
-426944,T.H. White,4.01,143873
-12534,Larry Niven,3.92,463102
-639570,Jean-François Revel,4.07,2066
-4841825,Marion Zimmer Bradley,4.00,439804
-1858,Kim Stanley Robinson,3.79,224616
-31232,Steven Erikson,4.23,419705
-704,Pearl S. Buck,3.99,295043
-1023510,R.A. Salvatore,4.15,831845
-874602,Ursula K. Le Guin,4.05,1000055
-1067608,Peter S. Beagle,4.06,171204
-9237,Jacqueline Carey,4.11,278162
-108424,Patrick Rothfuss,4.47,1284811
-2687,Dan Simmons,4.08,593183
-45752,Isaiah Berlin,4.07,10413
-269491,Simon Leys,3.93,2217
-13975392,Sharon Guskin,3.80,27259
-12476,Joe Haldeman,3.98,225051
-25307,Robin Hobb,4.20,1205501
-4432,Jasper Fforde,4.01,417848
-16939,Michael Moorcock,3.94,245758
-58,Frank Herbert,4.11,1254963
-545,Neal Stephenson,4.04,809204
-5807106,Iain M. Banks,4.08,359481
-15590,Mary  Stewart,4.06,179905
-580494,Jason Aaron,3.99,247223
-10746,Jim Butcher,4.26,2440706
-3619,Roger Zelazny,4.06,663321
-4280,Kazuo Ishiguro,3.84,832179
-311849,Norman Doidge,4.01,127065
-23069,Gene Wolfe,3.97,205790
-8732,David Eddings,4.08,985002
-566,Paulo Coelho,3.78,3104269
-5391363,Tom Wheelwright,4.15,1239
-39021,Chip Heath,4.00,139150
-5339,Robin McKinley,3.97,343275
-10449476,Janette Sadik-Khan,4.29,1116
-13199,Alain de Botton,3.88,158954
-147891,Cal Newport,4.15,135239
-8284103,Shawn Stevenson,4.03,4747
-17833805,Bruce Sackman,3.87,46
-8393515,Mark Vanhoenacker,3.96,3107
-11958,James C. Scott,4.12,8542
+570218,Dalai Lama XIV,4.18,265319
+261107,Mark W. Tiedemann,3.78,3321
+3032451,Siddhartha Mukherjee,4.30,117327
+6152615,Presh Talwalkar,3.90,797
+7014875,Nick Offerman,3.67,56892
+4864700,Will Cole,3.73,1066
+3389,Stephen King,4.04,14517292
+9494,H.P. Lovecraft,4.04,551123
+69641,Jen Sincero,3.95,161463
+5791,Max Brooks,3.98,572694
+7025,Gregory Maguire,3.53,886594
+3354,Haruki Murakami,3.96,2367775
+7210762,Scott Carney,4.00,7318
+3961,Alan Moore,4.23,1424625
+735413,Ben H. Winters,3.73,101089
+16247987,Paul  Shore,3.81,406
+3075,John Irving,4.00,944123
+9013543,Ruth Ware,3.73,929246
+6480560,Rory Sutherland,4.29,2140
+6252,Robert Jordan,4.18,2346850
+38550,Brandon Sanderson,4.39,3486136
+16094,Lois McMaster Bujold,4.17,476015
+880695,H.G. Wells,3.83,1046854
+12479,Timothy Zahn,4.07,376251
+3441,Terry Goodkind,4.00,1002136
+16667,Isaac Asimov,4.16,1987764
+1069006,C.S. Lewis,4.15,5859198
+656983,J.R.R. Tolkien,4.33,8476261
+3312074,John N. Gray,3.89,11084
+9629,Terry Brooks,3.96,790968
+815,Carlos Ruiz Zafón,4.14,786016
+1221698,Neil Gaiman,4.13,6077338
+55727,Jonathan Haidt,4.19,74987
+8588,Raymond E. Feist,4.14,819952
+19109,Stephen Jay Gould,4.04,68395
+740,James Altucher,3.82,19547
+12521,William Goldman,4.25,811178
+340262,Michael Breus,3.54,2261
+3617,Diana Gabaldon,4.27,2371628
+426944,T.H. White,4.01,145579
+12534,Larry Niven,3.92,464655
+205,Robert A. Heinlein,3.94,1100589
+639570,Jean-François Revel,4.08,2087
+4841825,Marion Zimmer Bradley,4.00,442373
+1630,Ray Bradbury,4.01,2375724
+1858,Kim Stanley Robinson,3.79,225753
+31232,Steven Erikson,4.23,423172
+704,Pearl S. Buck,3.99,296363
+1023510,R.A. Salvatore,4.15,837239
+874602,Ursula K. Le Guin,4.05,1010638
+1067608,Peter S. Beagle,4.36,802064
+9237,Jacqueline Carey,4.11,280010
+108424,Patrick Rothfuss,4.47,1295930
+2687,Dan Simmons,4.08,598038
+45752,Isaiah Berlin,4.07,10491
+269491,Simon Leys,3.94,2242
+13975392,Sharon Guskin,3.80,27354
+12476,Joe Haldeman,3.98,226578
+25307,Robin Hobb,4.19,1217919
+4432,Jasper Fforde,4.01,419694
+16939,Michael Moorcock,3.94,246450
+58,Frank Herbert,4.11,1270143
+545,Neal Stephenson,4.04,813885
+5807106,Iain M. Banks,4.08,361161
+15590,Mary  Stewart,4.06,180705
+580494,Jason Aaron,3.99,249355
+10746,Jim Butcher,4.25,2467669
+3619,Roger Zelazny,4.06,665365
+4280,Kazuo Ishiguro,3.84,838577
+311849,Norman Doidge,4.01,130287
+23069,Gene Wolfe,3.97,206696
+8732,David Eddings,4.07,994375
+566,Paulo Coelho,3.78,3128968
+5391363,Tom Wheelwright,4.15,1260
+39021,Chip Heath,4.00,140687
+5339,Robin McKinley,3.97,344880
+10449476,Janette Sadik-Khan,4.29,1130
+13199,Alain de Botton,3.88,160518
+147891,Cal Newport,4.15,138615
+1654,Terry Pratchett,4.15,4273266
+8284103,Shawn Stevenson,4.03,4794
+17833805,Bruce Sackman,3.81,52
+8393515,Mark Vanhoenacker,3.95,3120
+11958,James C. Scott,4.12,8642
 4580218,Lyn Fuchs,3.62,26
-4500913,Marshall Ulrich,3.75,2403
-12076,Russell Hoban,4.17,104219
-2001717,Daphne du Maurier,4.14,585932
-5151,Azar Nafisi,3.64,125005
-463,Philip Roth,3.82,398999
-371383,Kathleen Dean Moore,4.12,2123
-33918,China Miéville,3.85,292786
+4500913,Marshall Ulrich,3.75,2414
+12076,Russell Hoban,4.17,104967
+7779,Arthur C. Clarke,3.97,1088675
+2001717,Daphne du Maurier,4.14,590829
+5151,Azar Nafisi,3.64,126164
+463,Philip Roth,3.81,403711
+371383,Kathleen Dean Moore,4.12,2151
+33918,China Miéville,3.86,321605
 8381766,Jeffery Bagley,3.95,22
-6462483,Charles V. Bagli,3.93,385
-4763,John Scalzi,4.03,746292
-10137,John Kay,3.87,3015
-9226,William Gibson,3.89,593611
-4273,Roald Dahl,4.13,3154803
-65483,Richard H. Thaler,3.90,76846
-5051711,Katy Bowman,4.32,4672
+6462483,Charles V. Bagli,3.94,390
+4763,John Scalzi,4.03,754191
+10137,John Kay,3.87,3061
+9226,William Gibson,3.89,596242
+4273,Roald Dahl,4.13,3185495
+65483,Richard H. Thaler,3.90,77947
+5051711,Katy Bowman,4.32,4698
 5626406,I.J. Kay,3.50,371
-2782,Viktor E. Frankl,4.36,395014
-6428649,Jeremy  Dean,3.68,2141
-78286,B.K.S. Iyengar,4.30,16226
-17925311,Jeff Walker,3.98,2849
-8842,Susanna Clarke,3.85,227872
-23559,Roger MacBride Allen,3.66,31138
-3860489,Robert Penn,3.95,2394
-7014283,G.K. Chesterton,3.97,161574
-63356,Josh Kilmer-Purcell,3.98,19457
-8726,Richard Matheson,3.97,342398
-1730,Umberto Eco,3.95,554096
-3957,Alan Jacobs,4.02,8936
-16024,Greg Bear,3.86,564227
-6447537,R.R. Haywood,4.29,42568
-133131,Duncan J. Watts,3.84,5561
-2860219,Seanan McGuire,4.02,487077
-53501,George R. Stewart,3.97,26542
-26,Anne McCaffrey,4.08,1068449
-14032,Connie Willis,3.93,207817
-272429,Adrian Bejan,3.72,511
-10538,Carl Sagan,4.24,405681
-4220886,Timothy Ferris,4.12,8811
-500,Jorge Luis Borges,4.29,250160
-232366,Peggy Klaus,3.63,1537
-7113,Anne Lamott,4.01,272843
-109289,David Bayles,3.73,70726
-28129,Theodore Zeldin,3.99,2058
-14035655,Alex Honnold,3.87,6919
-21475,Pat Frank,4.07,39198
-4829,Donald Miller,3.97,185524
-696805,Jules Verne,3.89,754768
-44037,Vernor Vinge,4.08,124177
-15811,Rebecca Solnit,3.99,101481
-1455,Ernest Hemingway,3.83,2061009
-5735,Anthony Burgess,3.99,666367
-6025722,Walter M. Miller Jr.,3.97,96123
-5370985,Orest Stelmach,3.73,10987
+2782,Viktor E. Frankl,4.35,402256
+6428649,Jeremy  Dean,3.68,2146
+78286,B.K.S. Iyengar,4.28,16590
+3158574,Simon Sinek,4.09,163260
+17925311,Jeff Walker,3.98,2871
+8842,Susanna Clarke,3.85,232161
+23559,Roger MacBride Allen,3.66,31219
+3860489,Robert Penn,3.95,2412
+7014283,G.K. Chesterton,3.96,163319
+63356,Josh Kilmer-Purcell,3.98,19488
+8726,Richard Matheson,3.97,344211
+1730,Umberto Eco,3.96,557463
+3957,Alan Jacobs,4.02,9043
+16024,Greg Bear,3.86,566982
+6447537,R.R. Haywood,4.29,43081
+133131,Duncan J. Watts,3.84,5568
+2860219,Seanan McGuire,4.02,496444
+53501,George R. Stewart,3.97,26638
+26,Anne McCaffrey,4.08,1073201
+14032,Connie Willis,3.93,208962
+272429,Adrian Bejan,3.73,516
+10538,Carl Sagan,4.23,409657
+4220886,Timothy Ferris,4.12,8833
+500,Jorge Luis Borges,4.29,252921
+2778055,Kurt Vonnegut Jr.,4.06,2476324
+232366,Peggy Klaus,3.63,1547
+7113,Anne Lamott,4.01,275902
+109289,David Bayles,3.73,71140
+28129,Theodore Zeldin,3.99,2072
+14035655,Alex Honnold,3.87,7018
+21475,Pat Frank,4.07,39333
+4829,Donald Miller,3.97,187265
+696805,Jules Verne,3.89,760112
+44037,Vernor Vinge,4.08,124612
+15811,Rebecca Solnit,3.99,103155
+1455,Ernest Hemingway,3.83,2072229
+5735,Anthony Burgess,3.99,669551
+6025722,Walter M. Miller Jr.,3.97,97152
+4764,Philip K. Dick,3.92,1076137
+12667,Jess Walter,3.69,189497
+6540057,Andy Weir,4.26,1020737
+16612158,Masaji Ishikawa,4.26,39622
+3089156,Randall Munroe,4.15,157150
+7717,Richard  Adams,4.04,459791
+378554,Andrew Mayne,4.09,102052
+4805000,Mishka Shubaly,3.65,7154
+3472,Margaret Atwood,4.03,2744791
+3371,Dave Eggers,3.71,682081
+3087199,A.G. Riddle,3.91,208118
+7956,Mary Roach,3.95,369006
+61788,Marc Levy,3.78,127009
+7456960,Marc Goodman,3.93,3647
+442240,Blake Crouch,4.04,642230
+33919,Jeff VanderMeer,3.70,343297
+4,Douglas Adams,4.20,2741348
+3064305,Hugh Howey,4.15,583352
+18237,Peter Lynch,4.16,29061
+8865,Mary Karr,3.93,102320
+1825,Harper Lee,4.23,4715665
+4039811,Veronica Roth,4.06,5457199
+589,Orson Scott Card,4.09,2654629
+23613,Emma Donoghue,3.97,876824
+706255,Stieg Larsson,4.16,4274633
+1439,Malcolm Gladwell,4.01,2102034
+4178,Cormac McCarthy,4.01,1202146
+2546,Chuck Palahniuk,3.83,1506838
+7,Bill Bryson,4.03,1339326
+498072,Audrey Niffenegger,3.93,1677770
+3190,F. Scott Fitzgerald,3.91,4122332
+585,John Steinbeck,3.94,3735349
+1235,Jon Krakauer,4.04,1549694
+1077326,J.K. Rowling,4.46,25544259
+11139,Mary Wollstonecraft Shelley,3.81,1188393
+11072,Daniel Keyes,4.14,502167
+3706,George Orwell,4.08,6246899
+153394,Suzanne Collins,4.26,11752867
+133538,Christopher McDougall,4.27,179160
+1285555,José Saramago,4.03,419685
+2617,Jonathan Safran Foer,3.96,663605
+2849,David Sedaris,4.00,1805815
+3058,Augusten Burroughs,3.81,611287
+3487,Aldous Huxley,3.99,1717265
+13974,Mark Z. Danielewski,4.01,149148
+819789,J.D. Salinger,3.84,3107593
+3167,Joseph Heller,3.97,741996
+45003,Ken Jennings,3.83,14989
+4470653,S.J. Watson,3.85,305246
+401,Robert M. Pirsig,3.77,204080
+630,Dan Brown,3.84,7006012
