@@ -23,6 +23,7 @@ def formatMyRawDate(dateStringToFormat):
     else:
         datefieldobject = datetime.strptime(dateStringToFormat, '%a %b %d %H:%M:%S %z %Y')
         myNewDate = datefieldobject.date()
+    return myNewDate
 
 ## for later feature: create new function to get a discrete rating based on the avg rating
 
@@ -139,27 +140,9 @@ else:
         book_avg_rating = book.get('average_rating')
         book_ratings_cnt = book.get('ratings_count')
         
-        date_added_str = review.get('date_added')
-        # date_added = formatMyRawDate(review.get('date_added'))
-        if date_added_str is None:
-            date_added = None
-        else:
-            datefieldobject = datetime.strptime(date_added_str, '%a %b %d %H:%M:%S %z %Y')
-            date_added = datefieldobject.date()
-            
-        start_date_str = review.get('started_at')
-        if start_date_str is None:
-            start_date = None
-        else:
-            datefieldobject = datetime.strptime(start_date_str, '%a %b %d %H:%M:%S %z %Y')
-            start_date = datefieldobject.date()
-        
-        finish_date_str = review.get('read_at')
-        if finish_date_str is None:
-            finish_date = None
-        else:
-            datefieldobject = datetime.strptime(finish_date_str, '%a %b %d %H:%M:%S %z %Y')
-            finish_date = datefieldobject.date()
+        formatted_date_added = formatMyRawDate(review.get('date_added'))
+        formatted_start_date = formatMyRawDate(review.get('started_at'))
+        formatted_finish_date = formatMyRawDate(review.get('read_at'))
 
         myRating = review.get('rating')
         myReview = review.get('body')
@@ -190,9 +173,9 @@ else:
             book_avg_rating, 
             book_ratings_cnt, 
             author_id, 
-            date_added, 
-            start_date, 
-            finish_date, 
+            formatted_date_added, 
+            formatted_start_date, 
+            formatted_finish_date, 
             myRating, 
             myReview, 
             shelfName
