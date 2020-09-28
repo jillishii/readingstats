@@ -60,18 +60,22 @@ def getDiscreteAuthorRanking(rating_cnt):
     return(discrete_ranking)
 
 
-### Bookshelf Loading: Get current files or create new ones
-
-### GoodreadsAPI -- Get books by member shelf given a list of shelf names
+### Books File: Update current files or create new ones
 if path.exists('books.csv'):
     
+    books_in_file = []
     with open('books.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
-
-    for row in csv_reader:
-        current_books_rows.append(row[0])
+        line_count = 0
+        for row in csv_reader:
+            if line_count == 0:
+                print("reading books file...")
+                line_count += 1
+            else:
+                books_in_file.append(row[0])
+                line_count += 1
     
-    print(len(current_books_rows))
+    print('books in file: ' + str(len(books_in_file)))
 
 ### Since no files were found, build them here based on member ID 
 else:
