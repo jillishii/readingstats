@@ -25,7 +25,39 @@ def formatMyRawDate(dateStringToFormat):
         myNewDate = datefieldobject.date()
     return myNewDate
 
-## for later feature: create new function to get a discrete rating based on the avg rating
+def getDiscreteBookRanking(rating_cnt):
+    if rating_cnt < 5000:
+        discrete_ranking = "<5k"
+    elif 5000 <= rating_cnt < 50000:
+        discrete_ranking = "5k-50k"
+    elif 50000 <= rating_cnt < 100000:
+        discrete_ranking = "50k-100k"
+    elif 100000 <= rating_cnt < 400000:
+        discrete_ranking = "100k-400k"
+    elif 400000 <= rating_cnt < 2000000:
+        discrete_ranking = "400k-2m"
+    elif rating_cnt > 2000000:
+        discrete_ranking = ">2m"
+    else:
+        discrete_ranking = ""
+    return(discrete_ranking)
+    
+def getDiscreteAuthorRanking(rating_cnt):
+    if rating_cnt < 3000:
+        discrete_ranking = "<3k"
+    elif 3000 <= rating_cnt < 150000:
+        discrete_ranking = "3k-150k"
+    elif 150000 <= rating_cnt < 500000:
+        discrete_ranking = "150k-500k"
+    elif 500000 <= rating_cnt < 2000000:
+        discrete_ranking = "500k-2m"
+    elif 2000000 <= rating_cnt < 4000000:
+        discrete_ranking = "2m-4m"
+    elif rating_cnt > 4000000:
+        discrete_ranking = ">4m"
+    else:
+        discrete_ranking = ""
+    return(discrete_ranking)
 
 
 ### Bookshelf Loading: Get current files or create new ones
@@ -62,7 +94,9 @@ else:
       'publisher',
       'publication_year',
       'avg_rating',
+      'discrete_rating',
       'ratings_cnt',
+      'discrete_cnt',
       'author_id',
       'date_added',
       'start_date',
@@ -78,7 +112,9 @@ else:
         'id',
         'name',
         'avg_rating',
-        'ratings_cnt'
+        'discrete_rating',
+        'ratings_cnt',
+        'discrete_cnt'
     ]
  
 
@@ -137,8 +173,8 @@ else:
             num_pages = int(num_pages_raw)
         publisher = book.get('publisher')
         publication_year = book.get('published')
-        book_avg_rating = book.get('average_rating')
-        book_ratings_cnt = book.get('ratings_count')
+        book_avg_rating = float(book.get('average_rating'))
+        book_ratings_cnt = float(book.get('ratings_count'))
         
         formatted_date_added = formatMyRawDate(review.get('date_added'))
         formatted_start_date = formatMyRawDate(review.get('started_at'))
@@ -157,8 +193,8 @@ else:
             singleAuthor = authors.get('author')
             author_id = singleAuthor.get('id')
             author_name = singleAuthor.get('name')
-            author_avg_rating = singleAuthor.get('average_rating')
-            author_ratings_cnt = singleAuthor.get('ratings_count')
+            author_avg_rating = float(singleAuthor.get('average_rating'))
+            author_ratings_cnt = float(singleAuthor.get('ratings_count'))
         
         bookRow = [ 
             book_id, 
@@ -170,8 +206,10 @@ else:
             "", 
             publisher, 
             publication_year, 
-            book_avg_rating, 
+            book_avg_rating,
+            round(book_avg_rating),
             book_ratings_cnt, 
+            getDiscreteBookRanking(book_ratings_cnt),
             author_id, 
             formatted_date_added, 
             formatted_start_date, 
@@ -182,7 +220,14 @@ else:
             ]
         books_rows.append(bookRow)
         
-        authorRow = [ author_id, author_name, author_avg_rating, author_ratings_cnt ]
+        authorRow = [ 
+            author_id, 
+            author_name, 
+            author_avg_rating,
+            round(author_avg_rating),
+            author_ratings_cnt,
+            getDiscreteAuthorRanking(author_ratings_cnt)
+            ]
         if authorRow not in authors_rows:
             authors_rows.append(authorRow)
 
