@@ -149,7 +149,7 @@ else:
         
         thisReviewlist = reviewsReturned.get('review')
         reviewlist.extend(thisReviewlist)
-        booksData += book_end_num
+        booksData += per_page
         pageStart += 1
         print('totalBooksOnShelf: '+ str(totalBooksOnShelf))
         print('booksDataThisPage: ' + str(booksData - booksData_at_start))
