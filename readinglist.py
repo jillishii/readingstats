@@ -25,6 +25,28 @@ def formatMyRawDate(dateStringToFormat):
         myNewDate = datefieldobject.date()
     return myNewDate
 
+def getMemberBooks(memberID, pageStart=1, per_page=20):
+    MemberBooksReturn = []
+    conn = http.client.HTTPSConnection('www.goodreads.com')
+    payload = ''
+    headers = {
+        'Cookie': 'ccsid=355-8086303-7158046; locale=en'
+    }
+    uri = '/review/list?v=2&id=' + str(memberID) + '&key=kNP4OTpBRIGzIuvPFFTCQ&page=' + str(pageStart) + '&per_page=' + str(per_page)
+    conn.request('GET', uri, payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    returnObject = xmltodict.parse(data.decode('utf-8'))
+    GoodreadsResponse = returnObject.get('GoodreadsResponse')
+    reviewsReturned = GoodreadsResponse.get('reviews')
+    book_start_num = int(reviewsReturned.get('@start'))
+    book_end_num = int(reviewsReturned.get('@end'))
+    totalBooksOnShelf = int(reviewsReturned.get('@total'))
+    MemberBooksReturn.append(totalBooksOnShelf)
+    Reviewlist = reviewsReturned.get('review')
+    MemberBooksReturn.append(Reviewlist)
+    return MemberBooksReturn
+
 def getDiscreteBookRanking(rating_cnt):
     if rating_cnt < 5000:
         discrete_ranking = "<5k"
@@ -98,31 +120,15 @@ if path.exists('books.csv'):
     print('authors in file: ' + str(len(authors_in_file)))
 
     ### Compare to current file to Goodreads data (first 20 books)
-    conn = http.client.HTTPSConnection('www.goodreads.com')
-    payload = ''
-    headers = {
-        'Cookie': 'ccsid=355-8086303-7158046; locale=en'
-    }
-    uri = '/review/list?v=2&id=' + str(myMemberID) + '&key=kNP4OTpBRIGzIuvPFFTCQ'
-
-    conn.request('GET', uri, payload, headers)
-    res = conn.getresponse()
-    data = res.read()
-    
-    returnObject = xmltodict.parse(data.decode('utf-8'))
-    GoodreadsResponse = returnObject.get('GoodreadsResponse')
-    reviewsReturned = GoodreadsResponse.get('reviews')
-    book_start_num = int(reviewsReturned.get('@start'))
-    book_end_num = int(reviewsReturned.get('@end'))
-    totalBooksOnShelf = int(reviewsReturned.get('@total'))
+    MemberBooksReturn = getMemberBooks(myMemberID)
     
     ### Add new books if ID is not in file
     new_books_added = 0
     new_authors_added = 0
-    if len(books_in_file) == totalBooksOnShelf:
+    if len(books_in_file) == MemberBooksReturn[0]:
         print('No new books')
     else:
-        reviewlist = reviewsReturned.get('review')
+        reviewlist = MemberBooksReturn[1]
         
         for review in reviewlist:
             ## parse book data
@@ -266,26 +272,10 @@ else:
         booksData_at_start = booksData
         per_page = 100
         
-        conn = http.client.HTTPSConnection('www.goodreads.com')
-        payload = ''
-        headers = {
-            'Cookie': 'ccsid=355-8086303-7158046; locale=en'
-        }
-        uri = '/review/list?v=2&id=' + str(myMemberID) + '&key=kNP4OTpBRIGzIuvPFFTCQ&page=' + str(pageStart) + '&per_page=' + str(per_page)
-
-        conn.request('GET', uri, payload, headers)
-        res = conn.getresponse()
-        data = res.read()
+        MemberBooksReturn = getMemberBooks(myMemberID,pageStart,per_page)
         
-        returnObject = xmltodict.parse(data.decode('utf-8'))
-        GoodreadsResponse = returnObject.get('GoodreadsResponse')
-        reviewsReturned = GoodreadsResponse.get('reviews')
-        book_start_num = int(reviewsReturned.get('@start'))
-        book_end_num = int(reviewsReturned.get('@end'))
-        totalBooksOnShelf = int(reviewsReturned.get('@total'))
-        
-        thisReviewlist = reviewsReturned.get('review')
-        reviewlist.extend(thisReviewlist)
+        totalBooksOnShelf = MemberBooksReturn[0]
+        reviewlist.extend(MemberBooksReturn[1])
         booksData += per_page
         pageStart += 1
         print('totalBooksOnShelf: '+ str(totalBooksOnShelf))
