@@ -117,6 +117,8 @@ if path.exists('books.csv'):
     totalBooksOnShelf = int(reviewsReturned.get('@total'))
     
     ### Add new books if ID is not in file
+    new_books_added = 0
+    new_authors_added = 0
     if len(books_in_file) == totalBooksOnShelf:
         print('No new books')
     else:
@@ -128,6 +130,7 @@ if path.exists('books.csv'):
             book_id = review.get('id')
             
             if book_id not in books_in_file:
+                new_books_added += 1
                 isbn = book.get('isbn')
                 if isinstance(isbn, dict):
                     isbn = None
@@ -176,13 +179,11 @@ if path.exists('books.csv'):
                             author_ratings_cnt,
                             getDiscreteAuthorRanking(author_ratings_cnt)
                             ]
-                        # concat_authorRow = ",".join(str(authorRow))
                         with open('authors.csv','a',newline='') as csvfile:
+                            csvfile.write('\n')
                             for i in authorRow:
                                 csvfile.write(str(i) + ",")
-                    # print(str(authorRow))
-                    # print(concat_authorRow)
-                    print('author(s) added')
+                        print(str(new_authors_added) + ' author(s) added')
                     
                 bookRow = [ 
                     book_id, 
@@ -206,12 +207,11 @@ if path.exists('books.csv'):
                     myReview, 
                     shelfName
                     ]
-                # concat_bookRow = ",".join(str(bookRow))
                 with open('books.csv','a',newline='') as csvfile:
+                    csvfile.write('\n')
                     for i in bookRow:
                         csvfile.write(str(i) + ",")
-                # print(concat_bookRow)
-                print('books(s) added')
+                print(str(new_books_added) + ' books(s) added')
 
 
 ### If no files found, build them based on member ID 
