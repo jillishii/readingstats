@@ -81,6 +81,86 @@ def getDiscreteAuthorRanking(rating_cnt):
         discrete_ranking = ""
     return(discrete_ranking)
 
+def getNewBookAuthorRows(review, currentBookList=[], currentAuthorList=[]):
+    newBookData = []
+    book = review.get('book')
+    book_id = review.get('id')
+    
+    if book_id not in currentBookList:
+        isbn = book.get('isbn')
+        if isinstance(isbn, dict):
+            isbn = None
+        isbn13 = book.get('isbn13')
+        if isinstance(isbn13, dict):
+            isbn13 = None
+        title = book.get('title')
+        num_pages_raw = book.get('num_pages')
+        if num_pages_raw is None:
+            num_pages = None
+        else:
+            num_pages = int(num_pages_raw)
+        publisher = book.get('publisher')
+        publication_year = book.get('published')
+        book_avg_rating = float(book.get('average_rating'))
+        book_ratings_cnt = float(book.get('ratings_count'))
+        
+        formatted_date_added = formatMyRawDate(review.get('date_added'))
+        formatted_start_date = formatMyRawDate(review.get('started_at'))
+        formatted_finish_date = formatMyRawDate(review.get('read_at'))
+
+        myRating = review.get('rating')
+        myReview = review.get('body')
+        
+        shelves = review.get('shelves')
+        shelf = shelves.get('shelf')
+        shelfName = shelf.get('@name')
+    
+        ## parse author data
+        authors = book.get('authors')
+        for author in authors:
+            singleAuthor = authors.get('author')
+            author_id = singleAuthor.get('id')
+            
+            if author_id not in currentAuthorList:
+                author_name = singleAuthor.get('name')
+                author_avg_rating = float(singleAuthor.get('average_rating'))
+                author_ratings_cnt = float(singleAuthor.get('ratings_count'))
+            
+                authorRow = [ 
+                    author_id, 
+                    author_name, 
+                    author_avg_rating,
+                    round(author_avg_rating),
+                    author_ratings_cnt,
+                    getDiscreteAuthorRanking(author_ratings_cnt)
+                    ]
+    
+        bookRow = [ 
+            book_id, 
+            isbn, 
+            isbn13, 
+            title, 
+            num_pages, 
+            "", 
+            "", 
+            publisher, 
+            publication_year, 
+            book_avg_rating,
+            round(book_avg_rating),
+            book_ratings_cnt, 
+            getDiscreteBookRanking(book_ratings_cnt),
+            author_id, 
+            formatted_date_added, 
+            formatted_start_date, 
+            formatted_finish_date, 
+            myRating, 
+            myReview, 
+            shelfName
+            ]
+        newBookData.append(bookRow)
+        newBookData.append(authorRow)
+    return newBookData
+
 ### Confirm Goodreads Member ID
 user_input_confirm = input('Load bookshelf for Jill? [y/n]')
 if user_input_confirm == 'y':
@@ -99,7 +179,6 @@ if path.exists('books.csv'):
         line_count = 0
         for row in csv_reader:
             if line_count == 0:
-                print("reading books file...")
                 line_count += 1
             else:
                 books_in_file.append(row[0])
@@ -112,7 +191,6 @@ if path.exists('books.csv'):
         line_count = 0
         for row in csv_reader:
             if line_count == 0:
-                print("reading authors file...")
                 line_count += 1
             else:
                 authors_in_file.append(row[0])
@@ -123,101 +201,26 @@ if path.exists('books.csv'):
     MemberBooksReturn = getMemberBooks(myMemberID)
     
     ### Add new books if ID is not in file
-    new_books_added = 0
-    new_authors_added = 0
     if len(books_in_file) == MemberBooksReturn[0]:
         print('No new books')
     else:
         reviewlist = MemberBooksReturn[1]
         
-        for review in reviewlist:
-            ## parse book data
-            book = review.get('book')
-            book_id = review.get('id')
-            
-            if book_id not in books_in_file:
-                new_books_added += 1
-                isbn = book.get('isbn')
-                if isinstance(isbn, dict):
-                    isbn = None
-                isbn13 = book.get('isbn13')
-                if isinstance(isbn13, dict):
-                    isbn13 = None
-                title = book.get('title')
-                num_pages_raw = book.get('num_pages')
-                if num_pages_raw is None:
-                    num_pages = None
-                else:
-                    num_pages = int(num_pages_raw)
-                publisher = book.get('publisher')
-                publication_year = book.get('published')
-                book_avg_rating = float(book.get('average_rating'))
-                book_ratings_cnt = float(book.get('ratings_count'))
+        for myReview in reviewlist:
+            myBookData = getNewBookAuthorRows(myReview, books_in_file, authors_in_file)
+            if len(myBookData) > 1:
+                with open('authors.csv','a',newline='') as csvfile:
+                    csvfile.write('\n')
+                    for i in myBookData[1]:
+                        csvfile.write(str(i) + ",")
+                print('author added')
                 
-                formatted_date_added = formatMyRawDate(review.get('date_added'))
-                formatted_start_date = formatMyRawDate(review.get('started_at'))
-                formatted_finish_date = formatMyRawDate(review.get('read_at'))
-
-                myRating = review.get('rating')
-                myReview = review.get('body')
-                
-                shelves = review.get('shelves')
-                shelf = shelves.get('shelf')
-                shelfName = shelf.get('@name')
-            
-                
-                ## parse author data
-                authors = book.get('authors')
-                for author in authors:
-                    singleAuthor = authors.get('author')
-                    author_id = singleAuthor.get('id')
-                    
-                    if author_id not in authors_in_file:
-                        author_name = singleAuthor.get('name')
-                        author_avg_rating = float(singleAuthor.get('average_rating'))
-                        author_ratings_cnt = float(singleAuthor.get('ratings_count'))
-                    
-                        authorRow = [ 
-                            author_id, 
-                            author_name, 
-                            author_avg_rating,
-                            round(author_avg_rating),
-                            author_ratings_cnt,
-                            getDiscreteAuthorRanking(author_ratings_cnt)
-                            ]
-                        with open('authors.csv','a',newline='') as csvfile:
-                            csvfile.write('\n')
-                            for i in authorRow:
-                                csvfile.write(str(i) + ",")
-                        print(str(new_authors_added) + ' author(s) added')
-                    
-                bookRow = [ 
-                    book_id, 
-                    isbn, 
-                    isbn13, 
-                    title, 
-                    num_pages, 
-                    "", 
-                    "", 
-                    publisher, 
-                    publication_year, 
-                    book_avg_rating,
-                    round(book_avg_rating),
-                    book_ratings_cnt, 
-                    getDiscreteBookRanking(book_ratings_cnt),
-                    author_id, 
-                    formatted_date_added, 
-                    formatted_start_date, 
-                    formatted_finish_date, 
-                    myRating, 
-                    myReview, 
-                    shelfName
-                    ]
+            if len(myBookData) > 0:
                 with open('books.csv','a',newline='') as csvfile:
                     csvfile.write('\n')
-                    for i in bookRow:
+                    for i in myBookData[0]:
                         csvfile.write(str(i) + ",")
-                print(str(new_books_added) + ' books(s) added')
+                print('books added')
 
 
 ### If no files found, build them based on member ID 
@@ -259,7 +262,6 @@ else:
         'ratings_cnt',
         'discrete_cnt'
     ]
- 
 
     ## initialize paging variables (assume there is at least 1 book on the shelf to get)
     reviewlist = []
@@ -281,82 +283,12 @@ else:
         print('totalBooksOnShelf: '+ str(totalBooksOnShelf))
         print('booksDataThisPage: ' + str(booksData - booksData_at_start))
     
-    for review in reviewlist:
+    for myReview in reviewlist:
+        myBookData = getNewBookAuthorRows(myReview)
+        books_rows.append(myBookData[0])
         
-        ## parse book data
-        book = review.get('book')
-        book_id = review.get('id')
-        isbn = book.get('isbn')
-        if isinstance(isbn, dict):
-            isbn = None
-        isbn13 = book.get('isbn13')
-        if isinstance(isbn13, dict):
-            isbn13 = None
-        title = book.get('title')
-        num_pages_raw = book.get('num_pages')
-        if num_pages_raw is None:
-            num_pages = None
-        else:
-            num_pages = int(num_pages_raw)
-        publisher = book.get('publisher')
-        publication_year = book.get('published')
-        book_avg_rating = float(book.get('average_rating'))
-        book_ratings_cnt = float(book.get('ratings_count'))
-        
-        formatted_date_added = formatMyRawDate(review.get('date_added'))
-        formatted_start_date = formatMyRawDate(review.get('started_at'))
-        formatted_finish_date = formatMyRawDate(review.get('read_at'))
-
-        myRating = review.get('rating')
-        myReview = review.get('body')
-        
-        shelves = review.get('shelves')
-        shelf = shelves.get('shelf')
-        shelfName = shelf.get('@name')
-        
-        ## parse author data
-        authors = book.get('authors')
-        for author in authors:
-            singleAuthor = authors.get('author')
-            author_id = singleAuthor.get('id')
-            author_name = singleAuthor.get('name')
-            author_avg_rating = float(singleAuthor.get('average_rating'))
-            author_ratings_cnt = float(singleAuthor.get('ratings_count'))
-        
-        bookRow = [ 
-            book_id, 
-            isbn, 
-            isbn13, 
-            title, 
-            num_pages, 
-            "", 
-            "", 
-            publisher, 
-            publication_year, 
-            book_avg_rating,
-            round(book_avg_rating),
-            book_ratings_cnt, 
-            getDiscreteBookRanking(book_ratings_cnt),
-            author_id, 
-            formatted_date_added, 
-            formatted_start_date, 
-            formatted_finish_date, 
-            myRating, 
-            myReview, 
-            shelfName
-            ]
-        books_rows.append(bookRow)
-        
-        authorRow = [ 
-            author_id, 
-            author_name, 
-            author_avg_rating,
-            round(author_avg_rating),
-            author_ratings_cnt,
-            getDiscreteAuthorRanking(author_ratings_cnt)
-            ]
-        if authorRow not in authors_rows:
-            authors_rows.append(authorRow)
+        if myBookData[1] not in authors_rows:
+            authors_rows.append(myBookData[1])
 
     saveFile(books_filename, books_fields, books_rows)
     saveFile(authors_filename, authors_fields, authors_rows)
