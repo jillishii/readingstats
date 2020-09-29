@@ -59,10 +59,18 @@ def getDiscreteAuthorRanking(rating_cnt):
         discrete_ranking = ""
     return(discrete_ranking)
 
+### Confirm Goodreads Member ID
+user_input_confirm = input('Load bookshelf for Jill? [y/n]')
+if user_input_confirm == 'y':
+    myMemberID = 727455
+else:
+    myMemberID = input('Enter Goodreads Member ID')
+print('Member ID: ' + str(myMemberID))
 
 ### Books File: Update current files or create new ones
 if path.exists('books.csv'):
     
+    ### Load current files
     books_in_file = []
     with open('books.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -74,15 +82,140 @@ if path.exists('books.csv'):
             else:
                 books_in_file.append(row[0])
                 line_count += 1
-    
     print('books in file: ' + str(len(books_in_file)))
+    
+    authors_in_file = []
+    with open('authors.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            if line_count == 0:
+                print("reading authors file...")
+                line_count += 1
+            else:
+                authors_in_file.append(row[0])
+                line_count += 1
+    print('authors in file: ' + str(len(authors_in_file)))
 
-### Since no files were found, build them here based on member ID 
+    ### Compare to current file to Goodreads data (first 20 books)
+    conn = http.client.HTTPSConnection('www.goodreads.com')
+    payload = ''
+    headers = {
+        'Cookie': 'ccsid=355-8086303-7158046; locale=en'
+    }
+    uri = '/review/list?v=2&id=' + str(myMemberID) + '&key=kNP4OTpBRIGzIuvPFFTCQ'
+
+    conn.request('GET', uri, payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    
+    returnObject = xmltodict.parse(data.decode('utf-8'))
+    GoodreadsResponse = returnObject.get('GoodreadsResponse')
+    reviewsReturned = GoodreadsResponse.get('reviews')
+    book_start_num = int(reviewsReturned.get('@start'))
+    book_end_num = int(reviewsReturned.get('@end'))
+    totalBooksOnShelf = int(reviewsReturned.get('@total'))
+    
+    ### Add new books if ID is not in file
+    if len(books_in_file) == totalBooksOnShelf:
+        print('No new books')
+    else:
+        reviewlist = reviewsReturned.get('review')
+        
+        for review in reviewlist:
+            ## parse book data
+            book = review.get('book')
+            book_id = review.get('id')
+            
+            if book_id not in books_in_file:
+                isbn = book.get('isbn')
+                if isinstance(isbn, dict):
+                    isbn = None
+                isbn13 = book.get('isbn13')
+                if isinstance(isbn13, dict):
+                    isbn13 = None
+                title = book.get('title')
+                num_pages_raw = book.get('num_pages')
+                if num_pages_raw is None:
+                    num_pages = None
+                else:
+                    num_pages = int(num_pages_raw)
+                publisher = book.get('publisher')
+                publication_year = book.get('published')
+                book_avg_rating = float(book.get('average_rating'))
+                book_ratings_cnt = float(book.get('ratings_count'))
+                
+                formatted_date_added = formatMyRawDate(review.get('date_added'))
+                formatted_start_date = formatMyRawDate(review.get('started_at'))
+                formatted_finish_date = formatMyRawDate(review.get('read_at'))
+
+                myRating = review.get('rating')
+                myReview = review.get('body')
+                
+                shelves = review.get('shelves')
+                shelf = shelves.get('shelf')
+                shelfName = shelf.get('@name')
+            
+                
+                ## parse author data
+                authors = book.get('authors')
+                for author in authors:
+                    singleAuthor = authors.get('author')
+                    author_id = singleAuthor.get('id')
+                    
+                    if author_id not in authors_in_file:
+                        author_name = singleAuthor.get('name')
+                        author_avg_rating = float(singleAuthor.get('average_rating'))
+                        author_ratings_cnt = float(singleAuthor.get('ratings_count'))
+                    
+                        authorRow = [ 
+                            author_id, 
+                            author_name, 
+                            author_avg_rating,
+                            round(author_avg_rating),
+                            author_ratings_cnt,
+                            getDiscreteAuthorRanking(author_ratings_cnt)
+                            ]
+                        # concat_authorRow = ",".join(str(authorRow))
+                        with open('authors.csv','a',newline='') as csvfile:
+                            for i in authorRow:
+                                csvfile.write(str(i) + ",")
+                    # print(str(authorRow))
+                    # print(concat_authorRow)
+                    print('author(s) added')
+                    
+                bookRow = [ 
+                    book_id, 
+                    isbn, 
+                    isbn13, 
+                    title, 
+                    num_pages, 
+                    "", 
+                    "", 
+                    publisher, 
+                    publication_year, 
+                    book_avg_rating,
+                    round(book_avg_rating),
+                    book_ratings_cnt, 
+                    getDiscreteBookRanking(book_ratings_cnt),
+                    author_id, 
+                    formatted_date_added, 
+                    formatted_start_date, 
+                    formatted_finish_date, 
+                    myRating, 
+                    myReview, 
+                    shelfName
+                    ]
+                # concat_bookRow = ",".join(str(bookRow))
+                with open('books.csv','a',newline='') as csvfile:
+                    for i in bookRow:
+                        csvfile.write(str(i) + ",")
+                # print(concat_bookRow)
+                print('books(s) added')
+
+
+### If no files found, build them based on member ID 
 else:
-    ## can be set to run on any Goodreads member ID
-    # myMemberID = input(['Enter Goodreads Member ID'])
-    myMemberID = 727455
-    print(myMemberID)
 
     ## initialize book and author tables
     books_filename = 'books.csv'
@@ -238,7 +371,7 @@ else:
     saveFile(books_filename, books_fields, books_rows)
     saveFile(authors_filename, authors_fields, authors_rows)
     
-print('book shelf loading complete')
+print('Bookshelf loading complete')
 
 
 ### Goodreads API -- Get genre for each book using ISBN
